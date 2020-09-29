@@ -3,25 +3,25 @@ export const calculateBmi = (height: number, weight: number): string => {
 
     switch (true) {
         case (bmi < 15):
-            return 'Very severely underweight'
+            return 'Very severely underweight';
         case (15 <= bmi && bmi < 16):
-            return 'Severely underweight'
+            return 'Severely underweight';
         case (16 <= bmi && bmi < 18.5):
-                return 'Underweight'
+                return 'Underweight';
         case (18.5 <= bmi && bmi < 25):
-            return 'Normal (healthy weight)'
+            return 'Normal (healthy weight)';
         case (25 <= bmi && bmi < 30):
-            return 'Overweight'
+            return 'Overweight';
         case (30 <= bmi && bmi < 35):
-            return 'Obese Class I (Moderately obese)'
+            return 'Obese Class I (Moderately obese)';
         case (35 <= bmi && bmi < 40):
-            return 'Obese Class II (Severely obese)'
+            return 'Obese Class II (Severely obese)';
         case (40 <= bmi):
-            return 'Obese Class III (Very severely obese)'
+            return 'Obese Class III (Very severely obese)';
         default:
-            return 'This should not be possible'
+            return 'This should not be possible';
     }
-}
+};
 
 // interface bmiCalculationValues {
 //     height: number;
