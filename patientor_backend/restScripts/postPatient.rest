@@ -1,0 +1,10 @@
+POST http://localhost:3001/api/patients HTTP/1.1
+content-type: application/json
+
+{
+        "name": "Doom guy",
+        "dateOfBirth": "2306-06-06",
+        "ssn": "ABC123",
+        "gender": "male",
+        "occupation": "Doomslayer"
+}
