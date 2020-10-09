@@ -1,8 +1,9 @@
 import { Patient, PatientNoSensitiveInfo, newPatient } from './../types';
-import patients from '../data/patients.json';
+import patients from '../data/patients';
 
 export const getPatients = (): Array<Patient> => {
-    return patients as Array<Patient>;
+    // return patients as Array<Patient>;
+    return patients;
 };
 
 export const getPatientsNoSsn = (): Array<PatientNoSensitiveInfo> => {
@@ -19,7 +20,7 @@ export const getPatientsNoSsn = (): Array<PatientNoSensitiveInfo> => {
 };
 
 export const addPatient = (newPatient: newPatient): Patient => {
-    const idForPatient =  patients.length+1;
+    const idForPatient: number =  patients.length+1;
     const patientToAdd:Patient = {
         ...newPatient,
         id: idForPatient.toString()
