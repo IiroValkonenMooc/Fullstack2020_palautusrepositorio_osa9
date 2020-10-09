@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Container, Table, Button } from "semantic-ui-react";
+import { Container, Table, Button, List, Icon } from "semantic-ui-react";
 
 import { PatientFormValues } from "../AddPatientModal/AddPatientForm";
 import AddPatientModal from "../AddPatientModal";
@@ -54,6 +54,70 @@ const SinglePatient: React.FC<{id: string | undefined}> = ({id}) => {
           <h2>{patientToDisplay.name} ({patientToDisplay.gender})</h2>
           <h3>ssn: {patientToDisplay.ssn} </h3>
           <h3>occupation: {patientToDisplay.occupation} </h3>
+          <h2>entries: </h2>
+          {patientToDisplay.entries.map(entry => {
+            switch (entry.type) {
+              case 'Hospital':
+                return (
+                  <div className="ui segment"  key={entry.id} >
+                    <strong style={{fontSize: '1.5em'}}>{entry.date}</strong> <Icon name='hospital' size='big'/>
+                    <p>{entry.description}</p>
+                    <List as='ul'>
+                      {!entry.diagnosisCodes ? null : entry.diagnosisCodes.map(code => {
+                        return (
+                          <div key={code.toString()} style={{paddingLeft: '3em'}} >
+                            <List.Item as='li'  >
+                            {code}
+                            </List.Item>
+                          </div>
+                        );
+                      })}
+                    </List>
+                  </div>
+                );
+                
+              case 'OccupationalHealthcare':
+                return (
+                  <div className="ui segment"  key={entry.id} >
+                    <strong style={{fontSize: '1.5em'}}>{entry.date}</strong> <Icon name='user doctor' size='big'/>
+                    <p>{entry.description}</p>
+                    <List as='ul'>
+                      {!entry.diagnosisCodes ? null : entry.diagnosisCodes.map(code => {
+                        return (
+                          <div key={code.toString()} style={{paddingLeft: '3em'}} >
+                            <List.Item as='li'  >
+                              {code}
+                            </List.Item>
+                          </div>
+                        );
+                      })}
+                    </List>
+                  </div>
+                );
+              case 'HealthCheck':
+                  console.log('entry.healthCheckRating :>> ', entry.healthCheckRating);
+                  return (
+                    <div className="ui segment"  key={entry.id} >
+                      <strong style={{fontSize: '1.5em'}}>{entry.date}</strong> <Icon name='heartbeat' size='big'/>
+                      <p>{entry.description}</p>
+                      { 
+                        entry.healthCheckRating === 0 ? <Icon name='heart' color='red' size='big'/> 
+                        : entry.healthCheckRating === 1 ? <Icon name='heart' color='orange' size='big'/>
+                        : entry.healthCheckRating === 2 ? <Icon name='heart' color='yellow' size='big'/>
+                        : entry.healthCheckRating === 3 ? <Icon name='heart' color='grey' size='big'/>
+                        : null
+                      }
+                    </div>
+                  );
+              default:
+                return(
+                  <div>
+                    {'ERR'}
+                  </div>
+                );
+            }
+            
+          })}
         </Container>
       </div>
     );

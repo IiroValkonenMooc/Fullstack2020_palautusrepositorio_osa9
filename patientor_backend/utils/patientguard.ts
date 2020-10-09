@@ -21,14 +21,19 @@ const isGender = (param: any): boolean => {
 
 export const patientGuard = (patientToPost: any) => {
     if(!patientToPost.name || !isString(patientToPost.name)){
+        console.log('Error name');
         return false;
     } else if (!patientToPost.dateOfBirth || !isDate(patientToPost.dateOfBirth)){
+        console.log('Error date of birth');
         return false;
     } else if (!patientToPost.gender || !isGender(patientToPost.gender)){
+        console.log('Error gender');
         return false;
     } else if (!patientToPost.occupation || !isString(patientToPost.occupation)){
+        console.log('Error occupation');
         return false;
     } else if (patientToPost.id){
+        console.log('Error id');
         return false;
     } else {
         return true;

@@ -36,6 +36,7 @@ interface HealthCareEntryBase {
     specialist: string;
     diagnosisCodes?: Array<Diagnose['code']>;
     description: string;
+    healthCheckRating?: HealthCheckRating;
 }
 
 export interface OccupationalHealthCareEntry extends HealthCareEntryBase {
@@ -51,7 +52,6 @@ export interface HospitalEntry extends HealthCareEntryBase {
         date: string,
         criteria: string,
     };
-    healthCheckRating?: HealthCheckRating;
 }
 
 export enum HealthCheckRating {
