@@ -7,6 +7,10 @@ const isString = (text: any): text is string => {
     return typeof text === 'string' || text instanceof String;
 };
 
+const isNumber = (text: any): text is number => {
+    return typeof text === 'number';
+};
+
 const isDate = (date: string): boolean => {
     return Boolean(Date.parse(date));
 };
@@ -25,6 +29,32 @@ export const patientGuard = (patientToPost: any) => {
     } else if (!patientToPost.occupation || !isString(patientToPost.occupation)){
         return false;
     } else if (patientToPost.id){
+        return false;
+    } else {
+        return true;
+    }
+};
+
+export const entryGuard = (entryToPost: any) => {
+    if(!entryToPost.id || !isString(entryToPost.id)){
+        return false;
+    }else if(!entryToPost.date || !isString(entryToPost.date)){
+        return false;
+    } else if(!entryToPost.type || !isString(entryToPost.type)){
+        return false;
+    } else if(!entryToPost.specialist || !isString(entryToPost.specialist)){
+        return false;
+    } else if( entryToPost.diagnosisCodes && !Array.isArray(entryToPost.diagnosisCodes)){
+        return false;
+    } else if(!entryToPost.description || !isString(entryToPost.description)){
+        return false;
+    } else if( entryToPost.employerName || !isString(entryToPost.specialist)){
+        return false;
+    } else if( entryToPost.sickLeave && !Array.isArray(entryToPost.sickLeave)){
+        return false;
+    } else if( entryToPost.discharge && !Array.isArray(entryToPost.discharge)){
+        return false;
+    } else if( entryToPost.healthCheckRating && !isNumber(entryToPost.healthCheckRating)){
         return false;
     } else {
         return true;

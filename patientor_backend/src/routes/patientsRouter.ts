@@ -9,11 +9,11 @@ type FoundPatient = Patient | undefined;
 router.get('/:id', (reg, res) => {
     const id = reg.params.id;
     const patients = getPatients();
-    let foundPatient: FoundPatient =  patients.find(patient => patient.id == id);
+    const foundPatient: FoundPatient =  patients.find(patient => patient.id == id);
 
-    if(foundPatient && !foundPatient.entries){
-        foundPatient.entries = [];
-    }
+    // if(foundPatient && !foundPatient.entries){
+    //     foundPatient.entries = [];
+    // }
 
     res.json(foundPatient);
 });
