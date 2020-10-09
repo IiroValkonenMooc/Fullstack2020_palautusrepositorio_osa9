@@ -18,3 +18,19 @@ export interface Patient {
   ssn?: string;
   dateOfBirth?: string;
 }
+
+export interface PatientMoreInfo {
+  id: string;
+  name: string;
+  occupation: string;
+  gender: Gender;
+  ssn?: string;
+  dateOfBirth?: string;
+  entries: {
+
+  };
+}
+
+export interface RouteMatchId {
+  id?: string;
+}
