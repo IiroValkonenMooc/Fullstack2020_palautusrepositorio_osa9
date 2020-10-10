@@ -1,4 +1,4 @@
-import { Gender } from './../src/types';
+import { Gender } from '../types';
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -41,25 +41,45 @@ export const patientGuard = (patientToPost: any) => {
 };
 
 export const entryGuard = (entryToPost: any) => {
-    if(!entryToPost.id || !isString(entryToPost.id)){
-        return false;
-    }else if(!entryToPost.date || !isString(entryToPost.date)){
+    if(!entryToPost.date || !isString(entryToPost.date)){
+        console.log('date missing');
         return false;
     } else if(!entryToPost.type || !isString(entryToPost.type)){
+        console.log('type missing');
         return false;
     } else if(!entryToPost.specialist || !isString(entryToPost.specialist)){
+        console.log('specialist missing');
         return false;
     } else if( entryToPost.diagnosisCodes && !Array.isArray(entryToPost.diagnosisCodes)){
+        console.log('diagnosiscodes malformated');
         return false;
     } else if(!entryToPost.description || !isString(entryToPost.description)){
+        console.log('description missing');
         return false;
     } else if( entryToPost.employerName || !isString(entryToPost.specialist)){
+        console.log('employername malformated');
         return false;
-    } else if( entryToPost.sickLeave && !Array.isArray(entryToPost.sickLeave)){
+    } else if( entryToPost.sickLeave 
+        && entryToPost.sickLeave.startDate 
+        && entryToPost.sickLeave.endDate
+        && !isString(entryToPost.sickLeave.startDate)
+        && !isString(entryToPost.sickLeave.endDate)
+        ){
+        console.log('sickLeave malformated');
         return false;
-    } else if( entryToPost.discharge && !Array.isArray(entryToPost.discharge)){
+    } else if( entryToPost.discharge 
+        && entryToPost.discharge.date 
+        && entryToPost.discharge.criteria
+        && !isString(entryToPost.discharge.date)
+        && !isString(entryToPost.discharge.criteria)
+         && !Array.isArray(entryToPost.discharge)){
+        console.log('discharge malformated');
         return false;
     } else if( entryToPost.healthCheckRating && !isNumber(entryToPost.healthCheckRating)){
+        console.log('healthCheckRating malformated');
+        return false;
+    } else if( entryToPost.id ){
+        console.log('id on post');
         return false;
     } else {
         return true;

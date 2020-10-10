@@ -1,4 +1,4 @@
-import { Patient, PatientNoSensitiveInfo, newPatient } from './../types';
+import { Patient, PatientNoSensitiveInfo, newPatient, Entry, newEntry } from './../types';
 import patients from '../data/patients';
 
 export const getPatients = (): Array<Patient> => {
@@ -29,4 +29,16 @@ export const addPatient = (newPatient: newPatient): Patient => {
     patients.push(patientToAdd);
 
     return patientToAdd;
+};
+
+export const addEntryToPatients = (newEntry: newEntry, patient: Patient): Entry => {
+    const idForEntry: number =  patient.entries.length+1;
+    const entryToPost: Entry = {
+        ...newEntry,
+        id: idForEntry.toString()
+    };
+
+    patient.entries.push(entryToPost);
+
+    return entryToPost;
 };

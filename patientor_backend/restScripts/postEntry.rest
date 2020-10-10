@@ -1,0 +1,14 @@
+POST http://localhost:3001/api/patients/d27736ec-f723-11e9-8f0b-362b9e155667/entries HTTP/1.1
+content-type: application/json
+
+{
+        "date": "2019-08-05",
+        "type": "Hospital",
+        "specialist": "house",
+        "diagnosisCodes": ["S62.5"],
+        "description": "weird guy",
+        "discharge": {
+                "date": "2015-01-16",
+                "criteria": "Thumb has healed."
+        }
+}

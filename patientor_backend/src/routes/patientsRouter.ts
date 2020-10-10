@@ -1,8 +1,8 @@
 import express from "express";
-import { patientGuard } from "../../utils/patientguard";
+import { patientGuard, entryGuard } from "../utils/typeguards";
 const router = express.Router();
-import { getPatientsNoSsn, addPatient, getPatients } from '../services/patientsService';
-import { Patient } from '../types';
+import { getPatientsNoSsn, addPatient, getPatients, addEntryToPatients } from '../services/patientsService';
+import { Patient, newEntry } from '../types';
 
 type FoundPatient = Patient | undefined;
 
@@ -21,6 +21,26 @@ router.get('/:id', (reg, res) => {
 router.get('/', (_reg, res) => {
     const patients = getPatientsNoSsn();
     res.json(patients);
+});
+
+router.post('/:id/entries', (reg, res) => {
+    const id = reg.params.id;
+    const patients = getPatients();
+    const foundPatient: FoundPatient =  patients.find(patient => patient.id == id);
+
+    if(!foundPatient){
+        throw new Error('wring patient id');
+    }
+
+    if(!entryGuard(reg.body)){
+        throw new Error('Malformatted or missing data');
+    }
+
+    const newEntry = reg.body as newEntry;
+
+    const addedEntry = addEntryToPatients(newEntry, foundPatient);
+
+    res.json(addedEntry);
 });
 
 router.post('/', (reg, res) => {
