@@ -9,8 +9,12 @@ import { Patient, PatientMoreInfo } from "../types";
 import { apiBaseUrl } from "../constants";
 import HealthRatingBar from "../components/HealthRatingBar";
 import { useStateValue, addPatientSingle } from "../state";
+import HospitalEntryForm from '../EntryForm/HospitalEntryForm';
+import OccupationalHealthcare from '../EntryForm/OccupationalHealthcare';
+import HealthCheckForm from '../EntryForm/HealthCheckForm';
 
 const SinglePatient: React.FC<{id: string | undefined}> = ({id}) => {
+  const[showHospitalEntry, setShowHospitalEntry] = useState(0);
   const [{ patientsMoreInfo }, dispatch] = useStateValue();
   const [patientToDisplay, setPatientToDisplay] = useState<PatientMoreInfo | null>();
 
@@ -46,6 +50,7 @@ const SinglePatient: React.FC<{id: string | undefined}> = ({id}) => {
       });
     }
   }, [id]);
+  console.log('patientToDisplay :>> ', patientToDisplay);
 
   if (patientToDisplay) {
     return (
@@ -54,10 +59,18 @@ const SinglePatient: React.FC<{id: string | undefined}> = ({id}) => {
           <h2>{patientToDisplay.name} ({patientToDisplay.gender})</h2>
           <h3>ssn: {patientToDisplay.ssn} </h3>
           <h3>occupation: {patientToDisplay.occupation} </h3>
+          <Button onClick={() => setShowHospitalEntry(1)} >Add hospital entry</Button> 
+          <Button onClick={() => setShowHospitalEntry(2)} >Add occupational heathcare entry entry</Button> 
+          <Button onClick={() => setShowHospitalEntry(3)} >Add occupational patient health check</Button> 
+          { showHospitalEntry === 1 ? <HospitalEntryForm showForm={setShowHospitalEntry} patient={patientToDisplay} /> : null} 
+          { showHospitalEntry === 2 ? <OccupationalHealthcare showForm={setShowHospitalEntry} patient={patientToDisplay} /> : null} 
+          { showHospitalEntry === 3 ? <HealthCheckForm showForm={setShowHospitalEntry} patient={patientToDisplay} /> : null} 
           <h2>entries: </h2>
           {patientToDisplay.entries.map(entry => {
+            {console.log('entry :>> ', entry);}
             switch (entry.type) {
               case 'Hospital':
+                
                 return (
                   <div className="ui segment"  key={entry.id} >
                     <strong style={{fontSize: '1.5em'}}>{entry.date}</strong> <Icon name='hospital' size='big'/>
@@ -77,24 +90,15 @@ const SinglePatient: React.FC<{id: string | undefined}> = ({id}) => {
                 );
                 
               case 'OccupationalHealthcare':
+                console.log('entry :>> ', entry);
                 return (
                   <div className="ui segment"  key={entry.id} >
                     <strong style={{fontSize: '1.5em'}}>{entry.date}</strong> <Icon name='user doctor' size='big'/>
-                    <p>{entry.description}</p>
-                    <List as='ul'>
-                      {!entry.diagnosisCodes ? null : entry.diagnosisCodes.map(code => {
-                        return (
-                          <div key={code.toString()} style={{paddingLeft: '3em'}} >
-                            <List.Item as='li'  >
-                              {code}
-                            </List.Item>
-                          </div>
-                        );
-                      })}
-                    </List>
+                    {entry.description? <p>{entry.description}</p>: null}
                   </div>
                 );
               case 'HealthCheck':
+                console.log('entry :>> ', entry);
                   console.log('entry.healthCheckRating :>> ', entry.healthCheckRating);
                   return (
                     <div className="ui segment"  key={entry.id} >

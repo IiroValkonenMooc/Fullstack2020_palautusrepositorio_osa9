@@ -41,6 +41,7 @@ export const patientGuard = (patientToPost: any) => {
 };
 
 export const entryGuard = (entryToPost: any) => {
+    console.log('entryToPost :>> ', entryToPost);
     if(!entryToPost.date || !isString(entryToPost.date)){
         console.log('date missing');
         return false;

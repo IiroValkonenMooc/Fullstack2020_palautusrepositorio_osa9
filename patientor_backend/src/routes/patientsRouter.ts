@@ -15,7 +15,7 @@ router.get('/:id', (reg, res) => {
     //     foundPatient.entries = [];
     // }
 
-    res.json(foundPatient);
+    res.json(foundPatient); 
 });
 
 router.get('/', (_reg, res) => {
@@ -24,6 +24,8 @@ router.get('/', (_reg, res) => {
 });
 
 router.post('/:id/entries', (reg, res) => {
+    console.log('patients router');
+    console.log('reg.body :>> ', reg.body);
     const id = reg.params.id;
     const patients = getPatients();
     const foundPatient: FoundPatient =  patients.find(patient => patient.id == id);
